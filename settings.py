@@ -13,7 +13,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00,
     # Show-up fee. Keep >= $3.50 so the worst Part 2 outcome (-$3.50)
     # combined with $0 in Part 1 never makes total pay negative.
-    participation_fee=5.00,
+    participation_fee=0.00,
     doc="",
 )
 
