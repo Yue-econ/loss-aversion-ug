@@ -41,6 +41,11 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     student_name = models.StringField(label="Please enter your full name (as on the class roster):")
+    # filled in after the game, so each row of the export is self-explanatory
+    my_role = models.StringField()
+    partner_name = models.StringField()
+    offer_to_B = models.IntegerField()
+    B_decision = models.StringField()
 
 
 def set_payoffs(group: Group):
@@ -52,12 +57,36 @@ def set_payoffs(group: Group):
     else:
         a.payoff = cu(0)
         b.payoff = cu(0)
-    for p in (a, b):
+    for p, partner in ((a, b), (b, a)):
+        p.my_role = p.role
+        p.partner_name = partner.field_maybe_none('student_name')
+        p.offer_to_B = group.offer
+        p.B_decision = 'Accept' if group.accepted else 'Reject'
         pp = p.participant
         pp.ug_role = p.role
         pp.ug_offer = group.offer
         pp.ug_accepted = group.accepted
         pp.ug_payoff = p.payoff
+
+
+def custom_export(players):
+    """One row per pair. Data -> 'ultimatum' custom export."""
+    yield ['session', 'pair_id', 'A_name', 'B_name', 'offer_to_B', 'A_keeps',
+           'B_decision', 'A_payoff', 'B_payoff']
+    for p in players:
+        if p.role != C.A_ROLE:
+            continue
+        g = p.group
+        b = g.get_player_by_role(C.B_ROLE)
+        offer = g.field_maybe_none('offer')
+        acc = g.field_maybe_none('accepted')
+        yield [
+            p.session.code, g.id_in_subsession,
+            p.field_maybe_none('student_name'), b.field_maybe_none('student_name'),
+            offer, None if offer is None else C.PIE - offer,
+            None if acc is None else ('Accept' if acc else 'Reject'),
+            p.payoff, b.payoff,
+        ]
 
 
 # ---------------- PAGES ----------------
