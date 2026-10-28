@@ -1,0 +1,63 @@
+{{ block title }}Part 2{{ endblock }}
+{{ block content }}
+
+<p>Please make the following decisions. For each lottery, a fair coin is flipped:
+if it lands <b>heads</b>, you lose the amount shown; if it lands <b>tails</b>, you win {{ C.WIN }}.
+If you <b>Reject</b> a lottery, you earn $0 for sure.</p>
+
+<table class="table table-sm align-middle" style="max-width: 640px">
+  <thead>
+    <tr><th></th><th>Heads (50%)</th><th>Tails (50%)</th>
+        <th class="text-center">Accept</th><th class="text-center">Reject</th></tr>
+  </thead>
+  <tbody>
+  {{ for r in rows }}
+    <tr id="row-{{ r.idx }}">
+      <td><b>Lottery {{ r.idx }}</b></td>
+      <td>lose {{ r.loss }}</td>
+      <td>win {{ C.WIN }}</td>
+      <td class="text-center">
+        <input type="radio" class="form-check-input la" required
+               name="lottery_{{ r.idx }}" value="1" data-row="{{ r.idx }}">
+      </td>
+      <td class="text-center">
+        <input type="radio" class="form-check-input la" required
+               name="lottery_{{ r.idx }}" value="0" data-row="{{ r.idx }}">
+      </td>
+    </tr>
+  {{ endfor }}
+  </tbody>
+</table>
+
+<p><b>Notices:</b></p>
+<ol>
+  <li>For example, suppose Lottery 3 is chosen for payment at the end. If you chose "Accept",
+      with 50% chance you gain $3 and with 50% chance you lose $2. If you chose "Reject",
+      you earn $0 for sure.</li>
+  <li>The possible loss grows as you move down the list. Once you choose <b>"Reject"</b> for a lottery,
+      all later lotteries are automatically set to "Reject" as well. Likewise, choosing
+      <b>"Accept"</b> for a lottery automatically sets all earlier lotteries to "Accept".
+      You can still change your choices before submitting.</li>
+  <li>One of the six lotteries will be randomly chosen for payment.</li>
+  <li>You make these choices only once. After you click "Submit", you cannot come back and change them.</li>
+</ol>
+
+<button class="otree-btn-next btn btn-primary">Submit</button>
+
+<script>
+  function setRow(j, v) {
+    const el = document.querySelector('input[name="lottery_' + j + '"][value="' + v + '"]');
+    if (el) el.checked = true;
+  }
+  document.querySelectorAll('input.la').forEach(function (el) {
+    el.addEventListener('change', function () {
+      const k = parseInt(el.dataset.row);
+      for (let j = 1; j <= 6; j++) {
+        if (el.value === '0' && j > k) setRow(j, '0');  // reject -> reject all later
+        if (el.value === '1' && j < k) setRow(j, '1');  // accept -> accept all earlier
+      }
+    });
+  });
+</script>
+
+{{ endblock }}

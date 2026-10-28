@@ -1,0 +1,14 @@
+{{ block title }}Part 1 – Your decision (Person B){{ endblock }}
+{{ block content }}
+
+<p>Person A offers you <b>${{ group.offer }}</b> and would keep <b>${{ a_keeps }}</b>.</p>
+
+<ul>
+  <li>If you <b>Accept</b>: you earn ${{ group.offer }}, Person A earns ${{ a_keeps }}.</li>
+  <li>If you <b>Reject</b>: you both earn $0 in this part.</li>
+</ul>
+
+{{ formfield 'accepted' }}
+
+{{ next_button }}
+{{ endblock }}

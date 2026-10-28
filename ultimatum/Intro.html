@@ -1,0 +1,22 @@
+{{ block title }}Part 1{{ endblock }}
+{{ block content }}
+
+<p>In this part, you are <b>randomly paired</b> with another participant in this room.
+You will not learn who that person is, and they will not learn who you are.</p>
+
+<p>One of you is randomly assigned to be <b>Person A</b> and the other <b>Person B</b>.</p>
+
+<ul>
+  <li>Person A receives <b>$10</b> and decides how much of it to offer to Person B
+      (any whole-dollar amount from $0 to $10).</li>
+  <li>Person B sees the offer and decides whether to <b>Accept</b> or <b>Reject</b> it.</li>
+  <li>If Person B <b>accepts</b>, Person B earns the offered amount and Person A keeps the rest.</li>
+  <li>If Person B <b>rejects</b>, <b>both</b> earn $0 in this part.</li>
+</ul>
+
+<p>This part is played only once. You will learn the outcome of this part at the end of the experiment.</p>
+
+<p><b>Your role: {{ player.role }}</b></p>
+
+{{ next_button }}
+{{ endblock }}

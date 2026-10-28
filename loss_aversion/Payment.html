@@ -1,0 +1,18 @@
+{{ block title }}Your earnings{{ endblock }}
+{{ block content }}
+
+<h5>Part 1</h5>
+<p>You were <b>{{ ug_role }}</b>. Person A offered ${{ ug_offer }} to Person B (and would keep ${{ ug_a_keeps }}).
+Person B <b>{{ if ug_accepted }}accepted{{ else }}rejected{{ endif }}</b> the offer.<br>
+Your Part 1 earnings: <b>{{ ug_payoff }}</b></p>
+
+<h5>Part 2</h5>
+<p>Lottery {{ player.paid_lottery }} (lose {{ paid_loss }} / win {{ C.WIN }}) was randomly chosen.
+You chose <b>{{ if player.paid_accepted }}Accept{{ else }}Reject{{ endif }}</b>.
+{{ if player.paid_accepted }}The coin landed <b>{{ player.coin }}</b>.{{ endif }}<br>
+Your Part 2 earnings: <b>{{ player.payoff }}</b></p>
+
+<h5>Total</h5>
+<p>Part 1 + Part 2 + show-up fee ({{ fee }}) = <b>{{ total }}</b></p>
+
+{{ endblock }}
