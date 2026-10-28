@@ -40,7 +40,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    student_name = models.StringField(label="Please enter your full name (as on the class roster):")
 
 
 def set_payoffs(group: Group):
@@ -61,6 +61,22 @@ def set_payoffs(group: Group):
 
 
 # ---------------- PAGES ----------------
+class Name(Page):
+    form_model = 'player'
+    form_fields = ['student_name']
+
+    @staticmethod
+    def error_message(player: Player, values):
+        if len(values['student_name'].strip()) < 2:
+            return "Please enter your full name."
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        name = player.student_name.strip()
+        player.participant.student_name = name
+        player.participant.label = name   # shows in admin Monitor & Payments tabs
+
+
 class Intro(Page):
     pass
 
@@ -96,4 +112,4 @@ class ResultsWaitPage(WaitPage):
     body_text = "Please wait while the other participant makes a decision."
 
 
-page_sequence = [Intro, Offer, WaitForOffer, Respond, ResultsWaitPage]
+page_sequence = [Name, Intro, Offer, WaitForOffer, Respond, ResultsWaitPage]

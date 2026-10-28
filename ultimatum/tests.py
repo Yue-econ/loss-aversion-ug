@@ -4,6 +4,7 @@ from . import *
 
 class PlayerBot(Bot):
     def play_round(self):
+        yield Name, dict(student_name=f'Test Student {self.participant.id_in_session}')
         yield Intro
         if self.player.role == C.A_ROLE:
             yield SubmissionMustFail(Offer, dict(offer=11))

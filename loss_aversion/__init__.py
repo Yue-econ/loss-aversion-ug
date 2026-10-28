@@ -95,6 +95,7 @@ class Payment(Page):
     def vars_for_template(player: Player):
         pp = player.participant
         return dict(
+            student_name=pp.student_name,
             ug_role=pp.ug_role,
             ug_offer=pp.ug_offer,
             ug_a_keeps=10 - pp.ug_offer,

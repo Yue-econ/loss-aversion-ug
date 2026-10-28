@@ -17,8 +17,10 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc="",
 )
 
-PARTICIPANT_FIELDS = ['ug_role', 'ug_offer', 'ug_accepted', 'ug_payoff']
+PARTICIPANT_FIELDS = ['student_name', 'ug_role', 'ug_offer', 'ug_accepted', 'ug_payoff']
 SESSION_FIELDS = []
+
+ROOMS = [dict(name='econlab', display_name='Econ Lab')]
 
 LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'USD'

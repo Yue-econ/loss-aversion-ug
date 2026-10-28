@@ -1,6 +1,8 @@
 {{ block title }}Your earnings{{ endblock }}
 {{ block content }}
 
+<p>Name: <b>{{ student_name }}</b></p>
+
 <h5>Part 1</h5>
 <p>You were <b>{{ ug_role }}</b>. Person A offered ${{ ug_offer }} to Person B (and would keep ${{ ug_a_keeps }}).
 Person B <b>{{ if ug_accepted }}accepted{{ else }}rejected{{ endif }}</b> the offer.<br>
